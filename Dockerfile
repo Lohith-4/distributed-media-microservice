@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+python-dotenv
+Pillow
+python-multipart
+boto3
+celery
+redis
+amqp
+ffmpeg-python
+pytest
+httpx
+prometheus-fastapi-instrumentator

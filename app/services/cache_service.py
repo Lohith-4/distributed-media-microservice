@@ -1,14 +1,18 @@
 import redis
 import json
+import os
 
-redis_client = redis.Redis(host="172.26.29.124", port=6379, db=0)
+REDIS_HOST = os.getenv("REDIS_URL", "redis://172.26.29.124:6379/0")
+
+redis_client = redis.from_url(REDIS_HOST)
+
 def set_job_status(job_id: str, status: str, extra: dict = {}):
     data = {
         "status": status,
         "job_id": job_id,
         **extra
     }
-    redis_client.setex(job_id, 3600, json.dumps(data))  # Expires in 1 hour
+    redis_client.set(job_id, json.dumps(data), ex=3600)
     return data
 
 def get_job_status(job_id: str):
